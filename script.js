@@ -1,35 +1,47 @@
-// AGUARDA O CARREGAMENTO COMPLETO DO DOCUMENTO
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+    let currentFontSize = 100;
 
-    // BOTÃO DE ALTO CONTRASTE
-    const btnContrast = document.getElementById('btn-contrast');
-    if (btnContrast) {
-        btnContrast.addEventListener('click', () => {
-            document.body.classList.toggle('high-contrast');
-        });
-    }
+    // BOTÕES DE FONTE
+    const btnIncrease = document.getElementById("btn-increase-font");
+    const btnDecrease = document.getElementById("btn-decrease-font");
 
-    // BOTÕES DE AUMENTAR E DIMINUIR FONTE
-    const btnIncreaseFont = document.getElementById('btn-increase-font');
-    const btnDecreaseFont = document.getElementById('btn-decrease-font');
-    
-    let currentFontSize = 100; // Porcentagem inicial
-
-    if (btnIncreaseFont) {
-        btnIncreaseFont.addEventListener('click', () => {
-            if (currentFontSize < 130) { // Limite máximo 130%
+    if (btnIncrease) {
+        btnIncrease.addEventListener("click", () => {
+            if (currentFontSize < 130) {
                 currentFontSize += 10;
-                document.documentElement.style.fontSize = `${currentFontSize}%`;
+                document.documentElement.style.fontSize = currentFontSize + "%";
+                document.body.style.fontSize = currentFontSize + "%";
             }
         });
     }
 
-    if (btnDecreaseFont) {
-        btnDecreaseFont.addEventListener('click', () => {
-            if (currentFontSize > 90) { // Limite mínimo 90%
+    if (btnDecrease) {
+        btnDecrease.addEventListener("click", () => {
+            if (currentFontSize > 80) {
                 currentFontSize -= 10;
-                document.documentElement.style.fontSize = `${currentFontSize}%`;
+                document.documentElement.style.fontSize = currentFontSize + "%";
+                document.body.style.fontSize = currentFontSize + "%";
             }
         });
+    }
+
+    // BOTÃO DE CONTRASTE
+    const btnContrast = document.getElementById("btn-contrast");
+
+    if (btnContrast) {
+        btnContrast.addEventListener("click", () => {
+            document.body.classList.toggle("high-contrast");
+            
+            if (document.body.classList.contains("high-contrast")) {
+                localStorage.setItem("highContrast", "enabled");
+            } else {
+                localStorage.setItem("highContrast", "disabled");
+            }
+        });
+    }
+
+    // PREFERÊNCIA DE CONTRASTE
+    if (localStorage.getItem("highContrast") === "enabled") {
+        document.body.classList.add("high-contrast");
     }
 });
